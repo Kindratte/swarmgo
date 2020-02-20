@@ -77,7 +77,7 @@ services:
       replicas: 1
       labels:
         - traefik.enable=true
-        - traefik.frontend.rule=PathPrefixStrip:/grafana
+        - traefik.frontend.rule=Host:{{if .Domain}}{{.Domain}}{{else}}localhost{{end}};PathPrefixStrip:/grafana
         - traefik.port=3000
         - traefik.docker.network=webgateway
       placement:
@@ -111,7 +111,7 @@ services:
       replicas: 1
       labels:
         - traefik.enable=true
-        - traefik.frontend.rule=PathPrefixStrip:/alertmanager
+        - traefik.frontend.rule=Host:{{if .Domain}}{{.Domain}}{{else}}localhost{{end}};PathPrefixStrip:/alertmanager
         - traefik.port=9093
         - traefik.docker.network=webgateway
       placement:
@@ -179,7 +179,7 @@ services:
           - node.role == manager
       labels:
         - traefik.enable=true
-        - traefik.frontend.rule=PathPrefixStrip:/prometheus
+        - traefik.frontend.rule=Host:{{if .Domain}}{{.Domain}}{{else}}localhost{{end}};PathPrefixStrip:/prometheus
         - traefik.port=9090
         - traefik.docker.network=webgateway
       resources:
